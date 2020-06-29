@@ -82,11 +82,14 @@ def processImage(img):
     img.save(buffer, "PNG")
     pil_img = Image.open(io.BytesIO(buffer.data()))
     buffer.close()
+    #pil_img.show()
+
 
     try:
         result = pytesseract.image_to_string(
-            pil_img, timeout=2, lang=(sys.argv[1] if len(sys.argv) > 1 else None)
+            pil_img, timeout= 120, lang=(sys.argv[1] if len(sys.argv) > 1 else None)
         )
+
     except RuntimeError as error:
         print(f"ERROR: An error occurred when trying to process the image: {error}")
         notify(f"An error occurred when trying to process the image: {error}")
